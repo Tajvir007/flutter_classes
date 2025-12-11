@@ -1,0 +1,7 @@
+{
+  "recipes": [
+    { "title": "Chicken Curry", "ingredients": ["Chicken", "Spices"], "time": 30 },
+    { "title": "Beef Biriyani", "ingredients": ["Beef", "Rice"], "time": 60 },
+    { "title": "Vegetable Soup", "ingredients": ["Carrot", "Beans"], "time": 20 }
+  ]
+}
