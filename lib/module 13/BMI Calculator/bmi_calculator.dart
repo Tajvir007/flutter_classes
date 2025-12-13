@@ -4,7 +4,7 @@ import 'package:flutter_classes/module%2013/BMI%20Calculator/widget/custom_input
 /**
  *
  */
-// enum: is used to define a set of constants. It is used to define a set of values that are related to each other.
+// 1. enum: is used to define a set of constants. It is used to define a set of values that are related to each other.
 enum HeightType{cm, feetInch}
 
 class BmiCalculator extends StatefulWidget {
@@ -16,8 +16,85 @@ class BmiCalculator extends StatefulWidget {
 
 class _BmiCalculatorState extends State<BmiCalculator> {
 
-  //
+  // 2. State Variable: currently selected height type.  শুরুতে default value = cm
   HeightType? _heightType = HeightType.cm;
+
+  /**
+   * ************************** 3. BMI Calculation ******************************
+   * 1. Initialize variable
+   * 2. Convert all input to double. Then convert into meter
+   * 3. Calculate BMI
+   * 4. Catagorise BMI into underweight, normal, overweight, obese
+   * 5. Display result in setState() and call function in it
+   */
+  // 3.1. Initialize variable
+  TextEditingController _weightController = TextEditingController();
+  TextEditingController _cmController = TextEditingController();
+  TextEditingController _feetController = TextEditingController();
+  TextEditingController _inchController = TextEditingController();
+
+  String _bmiResult = '';
+  String? category;
+
+  double? cmToMeter(){
+    final cm = double.tryParse(_cmController.text.trim()); // trim() → extra space কাটে
+
+    if(cm == null || cm < 0) return null;
+    return cm/100;
+  }
+
+  double? feetInchToMeter(){
+    final feet = double.tryParse(_feetController.text.trim());
+    final inch = double.tryParse(_inchController.text.trim());
+
+    if(feet == null || feet < 0 || inch == null || inch < 0){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Input')));
+      return null;
+    }
+
+    final totalInch = (feet * 12) + inch;
+    if(totalInch <= 0){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Input')));
+      return null;
+    }
+
+    final meter = totalInch * 0.0254;
+    return meter;
+  }
+
+  void calculateBMI(){
+
+final weight = double.tryParse(_weightController.text.trim());
+if(weight == null || weight <= 0){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Input')));
+  return null;
+}
+
+final meterType = _heightType == HeightType.cm ? cmToMeter() : feetInchToMeter();
+if(meterType == null){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Input')));
+  return null;
+}
+
+final BMI = weight / (meterType * meterType);
+final cat = categoryResult(BMI);
+
+
+
+setState(() {
+  _bmiResult = BMI.toStringAsFixed(2);
+  category = cat;
+});
+
+  }
+
+  String categoryResult(double BMI){
+    if(BMI < 18.5) return "Under Weight";
+    if(BMI < 25) return "Normal";
+    if(BMI < 30) return "Over Weight";
+    return "Obese";
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +111,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
             Text("Weight Unit"),
             InputField(
               labelText: 'Enter your weight in (kg)',
-              controller: TextEditingController(),
+              controller: _weightController,
               textInputType: TextInputType.number,
             ),
 
@@ -71,7 +148,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
             if(_heightType == HeightType.cm)...[
               InputField(
                 labelText: 'Enter height (in CM)',
-                controller: TextEditingController(),
+                controller: _cmController,
                 textInputType: TextInputType.number,
               ),
             ] else...[
@@ -80,7 +157,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   Expanded(
                     child: InputField(
                       labelText: 'Enter Feet',
-                      controller: TextEditingController(),
+                      controller: _feetController,
                       textInputType: TextInputType.number,
                     ),
                   ),
@@ -88,13 +165,26 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                   Expanded(
                     child: InputField(
                       labelText: 'Enter Inch',
-                      controller: TextEditingController(),
+                      controller: _inchController,
                       textInputType: TextInputType.number,
                     ),
                   ),
                 ],
               ),
-            ]
+            ],
+
+            SizedBox(height: 16,),
+            
+            ElevatedButton(onPressed: (){
+              calculateBMI();
+            },
+                child: Text('Calculate BMI')),
+
+            SizedBox(height: 16,),
+
+            Text('Your BMI is: $_bmiResult'),
+            SizedBox(height: 16,),
+            Text('Your BMI is: $category'),
 
           ],
         ),
