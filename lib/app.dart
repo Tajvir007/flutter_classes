@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide GridView;
 import 'package:flutter_classes/home.dart';
 import 'package:flutter_classes/module%2012/state_concept.dart';
 import 'package:flutter_classes/module%2012/stateful_lifecycle.dart';
+import 'package:flutter_classes/module%2013/CRUD/crud.dart';
 import 'package:flutter_classes/module%208/dashboard.dart';
 import 'package:flutter_classes/module%209/app_theme.dart';
 import 'package:flutter_classes/module%209/list.dart';
@@ -130,7 +131,7 @@ class MyApp extends StatelessWidget {
             home: ThemeTest(),
 
             // 1. Name routes. Navigate using named routes
-            initialRoute: 'bmiCalculator',
+            initialRoute: 'crud',
             routes: {
               'home': (context) => Home(),
               'button' : (context) => Button(),
@@ -152,6 +153,7 @@ class MyApp extends StatelessWidget {
               'calculator': (context) => Calculator(),
               'apiCall': (context) => ApiCall(),
               'bmiCalculator': (context) => BmiCalculator(),
+              'crud': (context) => Crud(),
             },
 
           );
