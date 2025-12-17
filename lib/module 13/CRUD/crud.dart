@@ -50,75 +50,77 @@ class _CrudState extends State<Crud> {
 
     showDialog(context: context, builder: (context) => AlertDialog( // showDialog for adding and editing new product
       title: Text("Add Product"),
-      content: Column( // content for designing the dialog
-        mainAxisSize: MainAxisSize.min, // min size for dialog content
-        children: [
-
-          TextField(
-            controller: productNameController,
-            decoration: InputDecoration(
-              labelText: "Product Name"
+      content: SingleChildScrollView(
+        child: Column( // content for designing the dialog
+          mainAxisSize: MainAxisSize.min, // min size for dialog content
+          children: [
+        
+            TextField(
+              controller: productNameController,
+              decoration: InputDecoration(
+                labelText: "Product Name"
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-
-          TextField(
-            controller: productImgController,
-            decoration: InputDecoration(
-                labelText: "Image "
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productImgController,
+              decoration: InputDecoration(
+                  labelText: "Image "
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-
-          TextField(
-            controller: productTotalPriceController,
-            decoration: InputDecoration(
-                labelText: "Product Code"
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productTotalPriceController,
+              decoration: InputDecoration(
+                  labelText: "Product Code"
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-
-          TextField(
-            controller: productQtyController,
-            decoration: InputDecoration(
-                labelText: "QTY"
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productQtyController,
+              decoration: InputDecoration(
+                  labelText: "QTY"
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-
-          TextField(
-            controller: productPriceController,
-            decoration: InputDecoration(
-                labelText: "Unit Price"
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productPriceController,
+              decoration: InputDecoration(
+                  labelText: "Unit Price"
+              ),
             ),
-          ),
-          SizedBox(height: 10,),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(onPressed: (){
-                Navigator.pop(context);
-              }, child: Text('Cancel')),
-              ElevatedButton(onPressed: () async {
-                // C2. As the button is assign to create product so we have to create a object and pass the data to the createProduct() function
-                productController.createProduct(Data( // As Data is in model.dart, we need to create a object
-
-                  productName: productNameController.text,
-                  img: productImgController.text,
-                  qty: int.parse(productQtyController.text),
-                  unitPrice: int.parse(productPriceController.text),
-                  totalPrice: int.parse(productTotalPriceController.text),
-
-                ));
-                await fetchData();
-                Navigator.pop(context);
-
-              }, child: Text('Save')),
-            ],
-          ),
-
-        ],
+            SizedBox(height: 10,),
+        
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(onPressed: (){
+                  Navigator.pop(context);
+                }, child: Text('Cancel')),
+                ElevatedButton(onPressed: () async {
+                  // C2. As the button is assign to create product so we have to create a object and pass the data to the createProduct() function
+                  productController.createProduct(Data( // As Data is in model.dart, we need to create a object
+        
+                    productName: productNameController.text,
+                    img: productImgController.text,
+                    qty: int.parse(productQtyController.text),
+                    unitPrice: int.parse(productPriceController.text),
+                    totalPrice: int.parse(productTotalPriceController.text),
+        
+                  ));
+                  await fetchData();
+                  Navigator.pop(context);
+        
+                }, child: Text('Save')),
+              ],
+            ),
+        
+          ],
+        ),
       ),
     ));
 
