@@ -19,6 +19,11 @@ class TaskManagerApp extends StatelessWidget {
             fontSize: 28,
             fontWeight: FontWeight.w600,
           ),
+
+          bodyLarge: TextStyle(
+            color: Colors.grey,
+          ),
+
         ),
 
         // InputDecoration theme is used to style the text field input decoration
