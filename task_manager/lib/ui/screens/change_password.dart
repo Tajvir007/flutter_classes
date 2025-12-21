@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'background_page_logo.dart';
-import 'background_screen.dart';
+import '../widgets/background_page_logo.dart';
+import '../widgets/background_screen.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});

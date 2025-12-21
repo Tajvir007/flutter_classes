@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/login_page.dart';
 
-import 'background_page_logo.dart';
-import 'background_screen.dart';
+import '../widgets/background_page_logo.dart';
+import '../widgets/background_screen.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

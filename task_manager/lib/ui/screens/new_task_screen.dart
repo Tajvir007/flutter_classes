@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/task_card.dart';
 import '../widgets/task_count_by_status.dart';
 import '../widgets/task_manager_app_bar.dart';
 
@@ -36,13 +37,31 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 return SizedBox(width: 4,);
             },
             ),
-          )
+          ),
+
+          // ******************* Main Content Body **********************
+          Expanded(   // Here expanded is used to take full screen width as they need
+            child: ListView.separated(
+              itemCount: 10,
+                itemBuilder: (context, index){
+            
+                return  TaskCard(); // It's a custom widget. It is used to show the task card in main body through list view
+            
+                },
+                separatorBuilder: (context, index){
+                return SizedBox(height: 4,);
+                },
+                ),
+          ),
+
 
         ],
       ),
     );
   }
 }
+
+
 
 
 

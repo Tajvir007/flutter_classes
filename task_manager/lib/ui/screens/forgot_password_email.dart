@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/background_page_logo.dart';
-import 'package:task_manager/ui/screens/background_screen.dart';
+import 'package:task_manager/ui/widgets/background_page_logo.dart';
+import 'package:task_manager/ui/widgets/background_screen.dart';
 import 'package:task_manager/ui/screens/forget_password_verify_otp_screen.dart';
 
 import 'login_page.dart';
