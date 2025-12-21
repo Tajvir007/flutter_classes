@@ -12,10 +12,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  /**
-   * 1. Create a method _moveToNextScreen() to Navigate next screen after 3 second
-   * 2. Then call that method in initState() method
-   */
+  /// 1. Create a method _moveToNextScreen() to Navigate next screen after 3 second
+  /// 2. Then call that method in initState() method
 
   @override
   void initState() {
@@ -30,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundScreen(

@@ -5,11 +5,9 @@ class BackgroundScreen extends StatelessWidget {
   const BackgroundScreen({super.key, required this.child});
 
 
-  /**
-   * 1. This is custom background screen
-   * 2. We take a child widget because when the background screen apply, through the child widget we can
-   *    design the entire screen
-   */
+  /// 1. This is custom background screen
+  /// 2. We take a child widget because when the background screen apply, through the child widget we can
+  ///    design the entire screen
   final Widget child;
 
 

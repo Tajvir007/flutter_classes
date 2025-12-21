@@ -17,7 +17,7 @@ class _ForgotPasswordEmailState extends State<ForgotPasswordEmail> {
   @override
   Widget build(BuildContext context) {
 
-    void _onTapSignIn(){
+    void onTapSignIn(){
       Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
 
@@ -76,7 +76,7 @@ class _ForgotPasswordEmailState extends State<ForgotPasswordEmail> {
                           ),
 
                           recognizer: TapGestureRecognizer()
-                            ..onTap = _onTapSignIn
+                            ..onTap = onTapSignIn
                           
                         ),
                       ]

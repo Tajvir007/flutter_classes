@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TaskBarAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TaskBarAppBar({
+class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const TaskManagerAppBar({
     super.key,
   });
 
@@ -49,5 +49,5 @@ class TaskBarAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight); // kToolbarHeight = AppBar-এর default height (56.0)
 }

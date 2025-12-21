@@ -5,7 +5,6 @@ import 'package:task_manager/ui/screens/background_screen.dart';
 import 'package:task_manager/ui/screens/forgot_password_email.dart';
 import 'package:task_manager/ui/screens/main_nav_bar_holder_screen.dart';
 import 'package:task_manager/ui/screens/sign_up.dart';
-import 'package:task_manager/ui/utils/asset_paths.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     //1. Method for sign up
-    void _onTapSignUp(){
+    void onTapSignUp(){
       Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
     }
 
@@ -86,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
 
                         // 2. recognizer for sign up and call method _onTapSignUp()
                         recognizer: TapGestureRecognizer()
-                          ..onTap = _onTapSignUp,
+                          ..onTap = onTapSignUp,
 
                       ),
 
