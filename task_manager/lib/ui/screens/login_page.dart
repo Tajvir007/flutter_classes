@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/background_page_logo.dart';
 import 'package:task_manager/ui/screens/background_screen.dart';
 import 'package:task_manager/ui/screens/forgot_password_email.dart';
+import 'package:task_manager/ui/screens/main_nav_bar_holder_screen.dart';
 import 'package:task_manager/ui/screens/sign_up.dart';
 import 'package:task_manager/ui/utils/asset_paths.dart';
 
@@ -56,7 +57,9 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 10,),
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton(onPressed: (){},
+                    child: FilledButton(onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainNavBarHolderScreen()));
+                    },
                         child: Text('Login')),
                   ),
 
