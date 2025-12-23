@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TaskManagerAppBar({
@@ -11,32 +12,40 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.green,
 
       // 1. To add title in app bar
-      title: Row(
-        children: [
+      title: InkWell(
 
-          //
-          CircleAvatar(),
-          SizedBox(width: 8,),
+        // 3. To navigate to update profile screen
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateProfileScreen()));
+        },
 
-          // Name and Email
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          children: [
 
-            children: [
-              Text('Tajvir Ahmed Sejan',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.white
+            //
+            CircleAvatar(),
+            SizedBox(width: 8,),
+
+            // Name and Email
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
+              children: [
+                Text('Tajvir Ahmed Sejan',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Colors.white
+                  ),
                 ),
-              ),
 
-              Text('example@mail.com',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white
+                Text('example@mail.com',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.white
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
 
       // 2. To add button in app bar
