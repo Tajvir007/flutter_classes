@@ -49,13 +49,15 @@ class PhotoPicker extends StatelessWidget {
               ),
             ),
 
-            Text(selectedImage == null
-            ? "No photo selected"
-                : selectedImage!.name,
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              child: Text(selectedImage == null
+              ? "No photo selected"
+                  : selectedImage!.name,
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                ),
+                maxLines: 1,
               ),
-              maxLines: 1,
             ),
 
           ],

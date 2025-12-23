@@ -46,7 +46,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               itemCount: 10,
                 itemBuilder: (context, index){
             
-                return  TaskCard(); // It's a custom widget. It is used to show the task card in main body through list view
+                return  TaskCard(status: 'New', cardColor: Colors.blue,); // It's a custom widget. It is used to show the task card in main body through list view
             
                 },
                 separatorBuilder: (context, index){

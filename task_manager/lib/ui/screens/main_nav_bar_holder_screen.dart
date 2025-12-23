@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/new_task_screen.dart';
 import 'package:task_manager/ui/screens/progress_task_screen.dart';
 
+import 'canceled_task_screen.dart';
+import 'completed_task_screen.dart';
+
 class MainNavBarHolderScreen extends StatefulWidget {
   const MainNavBarHolderScreen({super.key});
 
@@ -18,9 +21,9 @@ class _MainNavBarHolderScreenState extends State<MainNavBarHolderScreen> {
   // 2.2 সব page list আকারে রাখছি
   List<Widget> screens = [
     NewTaskScreen(),
-    NewTaskScreen(),
+    CompletedTaskScreen(),
     ProgressTaskScreen(),
-    ProgressTaskScreen(),
+    CanclledTaskScreen(),
   ];
 
 
@@ -50,9 +53,9 @@ class _MainNavBarHolderScreenState extends State<MainNavBarHolderScreen> {
 
           destinations:[  // destinations হলো bottom bar এর সব tab/item এর list
             NavigationDestination(icon: Icon(Icons.sticky_note_2), label: 'New Task'), // প্রথম tab / navigation item. NavigationDestination is used to style the navigation bar item
-            NavigationDestination(icon: Icon(Icons.one_k_plus), label: 'Completed'),
-            NavigationDestination(icon: Icon(Icons.cancel), label: 'Cancelled'),
-            NavigationDestination(icon: Icon(Icons.downloading), label: 'Progress'),  // label = icon এর নিচে যে text দেখাবে
+            NavigationDestination(icon: Icon(Icons.arrow_right_alt), label: 'Completed'),
+            NavigationDestination(icon: Icon(Icons.cancel), label: 'Progress'),
+            NavigationDestination(icon: Icon(Icons.outgoing_mail), label: 'Canceled'),  // label = icon এর নিচে যে text দেখাবে
 
       ]
       ),
