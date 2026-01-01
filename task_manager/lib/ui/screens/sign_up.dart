@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/services/api_caller.dart';
+import 'package:task_manager/data/utils/urls.dart';
 import 'package:task_manager/ui/screens/login_page.dart';
 
 import '../widgets/background_page_logo.dart';
@@ -15,6 +17,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
 
   // 1. Controller for text field
+  // 2. Assign controllers to all text field
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -22,13 +25,72 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passwordController = TextEditingController();
  // final TextEditingController emailController = TextEditingController();
 
+  bool _signUpInProgress = false;
+
+  // 4. Create a function to call api caller and sign up
+  Future<void> _signUp()async {
+    setState(() {
+      _signUpInProgress = true;
+    });
+
+    // Create a request body to send data to api caller and store in requestBody variable
+      Map<String, dynamic> requestBody = {
+        "email": _emailController.text,
+        "firstName": _firstNameController.text,
+        "lastName": _lastNameController.text,
+        "mobile": _phoneController.text,
+        "password": _passwordController.text,
+
+      };
+
+      // 5. Call api. Create response object to store the response from api caller and store in response variable
+      final ApiResponse response = await ApiCaller.postRequest(
+          url: Urls.registrationUrl,
+          body: requestBody,
+      );
+
+      if(response.isSuccessful){
+        setState(() {
+          _signUpInProgress = false;
+        });
+        _clearTextFields();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Sign up successful..!"),
+          backgroundColor: Colors.green,
+            duration: Duration(seconds: 5),
+          )
+        );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(response.responseData['data']),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 5),
+            )
+        );
+      }
+
+  }
+
+
+  // 6. Create a function to clear all text field
+  _clearTextFields(){
+    _emailController.clear();
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _phoneController.clear();
+    _passwordController.clear();
+  }
+
+
   /**
    * 1. GlobalKey<FormState> = এটা একটা special key যেটা দিয়ে তুমি Form widget-এর state ধরতে পারো।
    * 2. GlobalKey → widget এর state globally access করতে দেয়
    * 3. <FormState> → specifically Form widget এর state
    * ********** এই key দিয়ে আমরা Form এর ভিতরের সব input control করব ************
    */
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // 3.1 Create a global key
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +102,7 @@ class _SignUpState extends State<SignUp> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
 
-                key: _formKey,
+                key: _formKey, // 3.2 Assign global key to form key
 
                 child: Column(
 
@@ -54,6 +116,7 @@ class _SignUpState extends State<SignUp> {
 
                     SizedBox(height: 10,),
                     TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         hintText: 'Email',
                         labelText: 'Email',
@@ -74,6 +137,7 @@ class _SignUpState extends State<SignUp> {
 
                     SizedBox(height: 10,),
                     TextFormField(
+                      controller: _firstNameController,
                       decoration: InputDecoration(
                         hintText: 'First Name',
                         labelText: 'First Name',
@@ -94,6 +158,7 @@ class _SignUpState extends State<SignUp> {
 
                     SizedBox(height: 10,),
                     TextFormField(
+                      controller: _lastNameController,
                       decoration: InputDecoration(
                         hintText: 'Last Name',
                         labelText: 'Last Name',
@@ -114,6 +179,7 @@ class _SignUpState extends State<SignUp> {
 
                     SizedBox(height: 10,),
                     TextFormField(
+                      controller: _phoneController,
                       decoration: InputDecoration(
                         hintText: 'Phone',
                         labelText: 'Phone',
@@ -134,6 +200,7 @@ class _SignUpState extends State<SignUp> {
 
                     SizedBox(height: 10,),
                     TextFormField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         labelText: 'Password',
@@ -165,13 +232,19 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 10,),
                     SizedBox(
                         width: double.infinity,
-                        child: FilledButton(onPressed: (){
+                        child: Visibility(
 
-                          if(_formKey.currentState!.validate()){
+                          visible: !_signUpInProgress,
+                          replacement: Center(child: CircularProgressIndicator()),
 
-                          }
+                          child: FilledButton(onPressed: (){
 
-                        }, child: Text('Sign UP'))),
+                            if(_formKey.currentState!.validate()){
+                              _signUp();
+                            }
+
+                          }, child: Text('Sign UP')),
+                        )),
 
                     SizedBox(height: 10,),
                     RichText(text: TextSpan(
@@ -211,4 +284,18 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
+
+  // 7. Dispose is use to Controller close, Stream cancel, Animation dispose. It will  avoid memory leak
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
 }

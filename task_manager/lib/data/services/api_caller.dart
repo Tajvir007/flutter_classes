@@ -9,14 +9,14 @@ class ApiCaller{
 
   static final Logger _logger = Logger();
 
-  static Future<ApiResponse> getRequest({required String Url}) async {
+  static Future<ApiResponse> getRequest({required String url}) async {
 
     try{
 
-      _logRequest(Url);
-      Uri uri = Uri.parse(Url); // parse url to uri
+      _logRequest(url);
+      Uri uri = Uri.parse(url); // parse url to uri
       Response response = await get(uri); // get response from url and store in response variable
-      _logResponse(Url, response);
+      _logResponse(url, response);
       final int statusCode = response.statusCode; // Store response status is it success or fail in statusCode variable
       final decodeJson = jsonDecode(response.body); // Decode the json response and store in decodeJson variable
 
@@ -37,12 +37,12 @@ class ApiCaller{
 
   }
 
-  static Future<ApiResponse> postRequest({required String Url, Map<String, dynamic> ? body}) async {
+  static Future<ApiResponse> postRequest({required String url, Map<String, dynamic> ? body}) async {
 
     try{
 
-      _logRequest(Url);
-      Uri uri = Uri.parse(Url); // parse url to uri
+      _logRequest(url, body: body);
+      Uri uri = Uri.parse(url); // parse url to uri
       Response response = await post(uri,
       headers: {
         "Accept": "application/json",
@@ -50,16 +50,16 @@ class ApiCaller{
       },
       body: body != null ? jsonEncode(body) : null,
       ); // get response from url and store in response variable
-      _logResponse(Url, response);
+      _logResponse(url, response);
       final int statusCode = response.statusCode; // Store response status is it success or fail in statusCode variable
-      final decodeJson = jsonDecode(response.body); // Decode the json response and store in decodeJson variable
+      final decodedData = jsonDecode(response.body); // Decode the json response and store in decodeJson variable
 
       if(statusCode == 200 || statusCode == 201){
 
-        return ApiResponse(responseCode: statusCode, responseData:decodeJson , isSuccessful: true);
+        return ApiResponse(responseCode: statusCode, responseData:decodedData , isSuccessful: true);
 
       }else{
-        return ApiResponse(responseCode: statusCode, responseData:decodeJson , isSuccessful: false);
+        return ApiResponse(responseCode: statusCode, responseData: decodedData , isSuccessful: false);
       }
 
     }
@@ -72,20 +72,20 @@ class ApiCaller{
   }
 
 
-  static void _logRequest(String Url, {Map<String, dynamic> ? body} ){
+  static void _logRequest(String url, {Map<String, dynamic> ? body} ){
 
     _logger.i(
-      'Url => $Url\n'
+      'Url => $url\n'
       'Request Body => $body\n',
     );
 
   }
 
-  static void _logResponse(String Url, Response response ){
+  static void _logResponse(String url, Response response ){
 
     _logger.i(
-        'Url => $Url\n'
-            'Response Code => ${response.statusCode}\n'
+        'Url => $url\n'
+            'Status Code => ${response.statusCode}\n'
             'Response Body => ${response.body}\n',
     );
 
@@ -100,7 +100,7 @@ class ApiResponse{
   final int responseCode;
   final dynamic responseData; // dynamic because
   final bool isSuccessful;
-  final String errorMessage;
+  final String ? errorMessage;
 
   ApiResponse(
   {
