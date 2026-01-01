@@ -130,7 +130,7 @@ class MyApp extends StatelessWidget {
             home: ThemeTest(),
 
             // 1. Name routes. Navigate using named routes
-            initialRoute: 'bmiCalculator',
+            initialRoute: 'recipeList',
             routes: {
               'home': (context) => Home(),
               'button' : (context) => Button(),
@@ -152,6 +152,7 @@ class MyApp extends StatelessWidget {
               'calculator': (context) => Calculator(),
               'apiCall': (context) => ApiCall(),
               'bmiCalculator': (context) => BmiCalculator(),
+              'recipeList': (context) => RecipeListPage(jsonString: 'asset/recipes.json',),
             },
 
           );
