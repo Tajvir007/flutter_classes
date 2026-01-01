@@ -62,6 +62,9 @@ class _SignUpState extends State<SignUp> {
           )
         );
       }else{
+        setState(() {
+          _signUpInProgress = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(response.responseData['data']),
               backgroundColor: Colors.red,
