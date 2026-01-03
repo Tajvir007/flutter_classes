@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/models/user_model.dart';
+import 'package:task_manager/ui/controller/auth_controller.dart';
 import 'package:task_manager/ui/widgets/background_page_logo.dart';
 import 'package:task_manager/ui/widgets/background_screen.dart';
 import 'package:task_manager/ui/screens/forgot_password_email.dart';
@@ -163,6 +165,11 @@ class _LoginPageState extends State<LoginPage> {
             duration: Duration(seconds: 5),
           )
       );
+
+      // Save user data in shared preferences and navigate to main screen
+      UserModel model = UserModel.fromJson(response.responseData['data']); // JSON → Dart object এ কনভার্ট করে API রেসপন্সের 'data' key থেকে ইউজারের তথ্য(JSON) নেওয়া হচ্ছে
+      String token = response.responseData['token']; // backend থেকে token extract করা হচ্ছে, এটা দিয়েই future API call হবে
+      await AuthController.saveUserData(model, token);
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainNavBarHolderScreen()));
 

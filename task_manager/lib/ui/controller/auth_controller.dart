@@ -21,7 +21,7 @@ class AuthController{
    * 3. এই method এর কাজ: token save করা. user info save করা
    */
   // login successful হলে এই method call হবে
-  saveUserData(UserModel model, String token) async {
+  static Future saveUserData(UserModel model, String token) async {
 
     // Crease shared preferences object to save data in device
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance(); // device local storage access করা হচ্ছে
