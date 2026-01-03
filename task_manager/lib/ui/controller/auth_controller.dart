@@ -51,4 +51,21 @@ class AuthController{
   }
 
 
+  // Check User loggedIn or not
+  static Future<bool> isUserLoggedIn() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance(); // device local storage access করা হচ্ছে
+    String ? token = sharedPreferences.getString(_accessTokenKey); // SharedPreferences থেকে _accessTokenKey ব্যবহার করে saved access token পড়া হচ্ছে (না থাকলে null আসবে)
+
+    return token != null; // token null না হলে → true (user logged in ✅), token null হলে → false (user logged out ❌)
+
+  }
+
+
+  // Clear user data from device when log out
+  static Future<void> clearUserData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+  }
+
+
 }

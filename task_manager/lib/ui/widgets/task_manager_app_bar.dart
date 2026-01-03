@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/controller/auth_controller.dart';
 import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -50,7 +51,10 @@ class TaskManagerAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       // 2. To add button in app bar
       actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.logout))
+        IconButton(onPressed: (){
+          AuthController.clearUserData();
+          Navigator.pushNamedAndRemoveUntil(context, '/LogIn', (predicate) => false);
+        }, icon: Icon(Icons.logout))
       ],
 
     );
