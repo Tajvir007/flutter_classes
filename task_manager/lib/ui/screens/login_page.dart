@@ -64,6 +64,20 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Email',
                         labelText: 'Email',
                       ),
+
+                      validator: (String ? value){
+                        if(value == null || value.isEmpty){
+                          return 'Email is required';
+                        }
+
+                        final emailRegularExpression = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if( ! emailRegularExpression.hasMatch(value)){
+                          return 'please enter valid email';
+                        }
+                        return null;
+
+                      },
+
                     ),
 
                     SizedBox(height: 10,),
@@ -73,6 +87,20 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Password',
                         labelText: 'Password',
                       ),
+
+                      obscureText: true,
+
+                      validator: (String ? value){
+                        if(value == null || value.isEmpty){
+                          return 'Enter your Password';
+                        }
+                        if(value.length <= 6){
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+
+                      },
+
                     ),
 
                     // FilledButton
