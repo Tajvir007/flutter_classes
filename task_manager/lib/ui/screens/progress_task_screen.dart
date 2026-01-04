@@ -19,7 +19,8 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 3),
           child: ListView.separated(
               itemBuilder: (context, index){
-                return TaskCard(status: 'Progress', cardColor: Colors.purple,);
+               // return TaskCard(status: 'Progress', cardColor: Colors.purple,);
+                return Text('');
               },
               separatorBuilder: (context, index){
                 return SizedBox(height: 5,);
