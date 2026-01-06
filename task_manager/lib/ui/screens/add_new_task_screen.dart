@@ -128,6 +128,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     if(response.isSuccessful){
 
       _clearField();
+      Navigator.pushNamedAndRemoveUntil(context, 'mainNavBarHolderScreen', (predicate) => false);
       showSnackBarMessage(context, 'New Task added');
 
     }else{
