@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/widgets/task_manager_app_bar.dart';
-
+import 'package:task_manager/ui/widgets/task_card.dart';
 import '../../data/models/task_model.dart';
 import '../../data/services/api_caller.dart';
 import '../../data/utils/urls.dart';

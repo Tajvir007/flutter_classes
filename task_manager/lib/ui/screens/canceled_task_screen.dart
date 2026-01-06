@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:task_manager/ui/widgets/task_card.dart';
 import '../../data/models/task_model.dart';
 import '../../data/services/api_caller.dart';
 import '../../data/utils/urls.dart';
@@ -29,7 +29,7 @@ class _CanclledTaskScreenState extends State<CanclledTaskScreen> {
 
     });
 
-    ApiResponse response = await ApiCaller.getRequest(url: Urls.completedTaskUrl); // API call হচ্ছে
+    ApiResponse response = await ApiCaller.getRequest(url: Urls.cancelledTaskUrl); // API call হচ্ছে
 
     _getcancelledTaskProgress = false;
     setState(() {
@@ -49,6 +49,16 @@ class _CanclledTaskScreenState extends State<CanclledTaskScreen> {
 
     _cancelledTaskList = taskList; // final list main state variable-এ assign, UI তে এই data show হবে
 
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getAllTask();
+    setState(() {
+
+    });
   }
 
 

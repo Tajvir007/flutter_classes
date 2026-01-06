@@ -57,6 +57,9 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
     // TODO: implement initState
     super.initState();
     _getAllTask();
+    setState(() {
+
+    });
   }
 
 
