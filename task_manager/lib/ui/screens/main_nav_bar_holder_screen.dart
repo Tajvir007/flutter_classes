@@ -21,8 +21,8 @@ class _MainNavBarHolderScreenState extends State<MainNavBarHolderScreen> {
   // 2.2 সব page list আকারে রাখছি
   List<Widget> screens = [
     NewTaskScreen(),
-    CompletedTaskScreen(),
     ProgressTaskScreen(),
+    CompletedTaskScreen(),
     CanclledTaskScreen(),
   ];
 
@@ -53,9 +53,9 @@ class _MainNavBarHolderScreenState extends State<MainNavBarHolderScreen> {
 
           destinations:[  // destinations হলো bottom bar এর সব tab/item এর list
             NavigationDestination(icon: Icon(Icons.sticky_note_2), label: 'New Task'), // প্রথম tab / navigation item. NavigationDestination is used to style the navigation bar item
-            NavigationDestination(icon: Icon(Icons.arrow_right_alt), label: 'Completed'),
-            NavigationDestination(icon: Icon(Icons.cancel), label: 'Progress'),
-            NavigationDestination(icon: Icon(Icons.outgoing_mail), label: 'Canceled'),  // label = icon এর নিচে যে text দেখাবে
+            NavigationDestination(icon: Icon(Icons.refresh), label: 'Progress'),
+            NavigationDestination(icon: Icon(Icons.done), label: 'Completed'),
+            NavigationDestination(icon: Icon(Icons.cancel), label: 'Canceled'),  // label = icon এর নিচে যে text দেখাবে
 
       ]
       ),

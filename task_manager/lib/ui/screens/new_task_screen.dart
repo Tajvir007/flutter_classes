@@ -136,7 +136,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                 return  TaskCard(
                  // status: 'New',
                   taskModel: _newTaskList[index],
-                  refreshParent: (){},
+                  refreshParent: (){
+                    _getAllNewTask();
+                    _getAllTaskCount();
+                  },
                   cardColor: Colors.blue,); // It's a custom widget. It is used to show the task card in main body through list view
 
                 },
