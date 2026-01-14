@@ -44,6 +44,7 @@ class AuthController{
 
     // Token থাকলে user logged in
     if(token != null){
+      accessToken = token;
       String ? userData = sharedPreferences.getString(_userModelKey); // saved user JSON read করা হচ্ছে
       userModel = UserModel.fromJson(jsonDecode(userData!)); // JSON String → Map → UserModel, User session restore
     }
@@ -57,6 +58,15 @@ class AuthController{
     String ? token = sharedPreferences.getString(_accessTokenKey); // SharedPreferences থেকে _accessTokenKey ব্যবহার করে saved access token পড়া হচ্ছে (না থাকলে null আসবে)
 
     return token != null; // token null না হলে → true (user logged in ✅), token null হলে → false (user logged out ❌)
+
+  }
+
+
+
+  // Update user profile
+  static Future<void> updateUserData(UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance(); // device local storage access করা হচ্ছে
+    await sharedPreferences.setString(_userModelKey, jsonEncode(model.toJson())); //User model অবজেক্টকে JSON string বানিয়ে SharedPreferences-এ সেভ করা, যাতে অ্যাপ বন্ধ হলেও লগইন/ইউজার ডাটা থেকে যায়।
 
   }
 
