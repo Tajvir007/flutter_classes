@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/providers/auth_provider.dart';
 import 'package:task_manager/ui/controller/auth_controller.dart';
 import 'package:task_manager/ui/widgets/background_screen.dart';
 import 'package:task_manager/ui/screens/login_page.dart';
@@ -26,11 +28,21 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _moveToNextScreen() async {
     await Future.delayed(Duration(seconds: 3));
 
+    /**
+     * ******** By  Auth Controller ************
+
     await AuthController.getUserData();
 
     // Check user logged in or not
     final bool isLoggedIn = await AuthController.isUserLoggedIn();
-    if(isLoggedIn){
+        **/
+
+
+    // By Auth Provider
+    final authProvider = Provider.of<AuthProvider>(context, listen: false); // এই লাইনে তুমি Widget tree থেকে AuthProvider-এর instance নিয়ে আসছো।
+    authProvider.loadUserData();
+
+    if(authProvider.isLoggedIn){
       Navigator.pushReplacementNamed(context, 'mainNavBarHolderScreen');
     }else{
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage() ));
