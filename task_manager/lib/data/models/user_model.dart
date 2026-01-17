@@ -13,6 +13,7 @@ class UserModel {
   final String firstName;
   final String lastName;
   final String mobile;
+  final String photo;
 
   // Constructor for UserModel class
   UserModel({
@@ -21,6 +22,7 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.mobile,
+    required this.photo
   });
 
   /**
@@ -41,6 +43,7 @@ class UserModel {
       firstName: jsonData['firstName'],
       lastName: jsonData['lastName'],
       mobile: jsonData['mobile'],
+      photo: jsonData['photo'] ?? '',
     );
   }
 
@@ -62,6 +65,7 @@ class UserModel {
       "firstName": firstName,
       "lastName": lastName,
       "mobile": mobile,
+      "photo" : photo
     };
   }
 }

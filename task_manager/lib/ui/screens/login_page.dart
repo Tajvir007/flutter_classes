@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/data/models/user_model.dart';
+import 'package:task_manager/providers/auth_provider.dart';
+import 'package:task_manager/providers/network_provider.dart';
 import 'package:task_manager/ui/controller/auth_controller.dart';
 import 'package:task_manager/ui/widgets/background_page_logo.dart';
 import 'package:task_manager/ui/widgets/background_screen.dart';
@@ -64,6 +67,20 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Email',
                         labelText: 'Email',
                       ),
+
+                      validator: (String ? value){
+                        if(value == null || value.isEmpty){
+                          return 'Email is required';
+                        }
+
+                        final emailRegularExpression = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if( ! emailRegularExpression.hasMatch(value)){
+                          return 'please enter valid email';
+                        }
+                        return null;
+
+                      },
+
                     ),
 
                     SizedBox(height: 10,),
@@ -73,6 +90,20 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Password',
                         labelText: 'Password',
                       ),
+
+                      obscureText: true,
+
+                      validator: (String ? value){
+                        if(value == null || value.isEmpty){
+                          return 'Enter your Password';
+                        }
+                        if(value.length <= 6){
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+
+                      },
+
                     ),
 
                     // FilledButton
@@ -84,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                         // Check if form is valid or not and call login function. Then navigate to main screen
                         if(_formKey.currentState!.validate()){
 
-                          _logIn();
+                          _login();
 
                         }
 
@@ -134,6 +165,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
+  /**  Login with Controller
   // 4. Create a function to call api caller and log in
   Future<void> _logIn()async {
     setState(() {
@@ -183,7 +215,41 @@ class _LoginPageState extends State<LoginPage> {
     }
 
   }
+**/
 
+
+
+  // Login with provider
+  Future<void> _login() async {
+
+    final networkProvider = Provider.of<NetworkProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    final result = await networkProvider.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text);
+
+    if(result != null){
+      await authProvider.saveUserData(result['user'], result['token']);
+      _clearTextFields();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Sign in successful..!"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 5),
+          )
+      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainNavBarHolderScreen()));
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(networkProvider.errorMessage ?? 'Something wrong'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 5),
+          )
+      );
+    }
+
+  }
 
   // . Create a function to clear all text field
   _clearTextFields(){

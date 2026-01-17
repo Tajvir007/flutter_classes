@@ -8,6 +8,14 @@ import 'package:task_manager/ui/screens/update_profile_screen.dart';
 class TaskManagerApp extends StatelessWidget {
   const TaskManagerApp({super.key});
 
+  /**
+   * 1.  3. status_code 401: For unauthorized login user need to login again. So, we need to move to login screen through navigator
+   *      It is used in -> api_caller.dart
+   * 2. এটা একটা global Navigator key
+   * 3. যেকোনো জায়গা থেকে context ছাড়াই navigation করার জন্য ব্যবহার হয়
+   */
+  static GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
