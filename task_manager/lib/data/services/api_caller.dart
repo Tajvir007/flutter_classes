@@ -14,6 +14,8 @@ class ApiCaller {
   // Logger object তৈরি করা হচ্ছে, যেটা console এ request/response log দেখাবে
   static final Logger _logger = Logger();
 
+  static String ? accessToken;
+
   // =========================
   // GET REQUEST METHOD
   // =========================
@@ -25,7 +27,7 @@ class ApiCaller {
         uri, // get response from url and store in response variable
         headers: {
           'token':
-              AuthController.accessToken ??
+          accessToken ?? // By provider  // AuthController.accessToken ??  // By Controller
               '', // যদি AuthController.accessToken null না হয়, তাহলে সেটার value নাও আর যদি null হয়, তাহলে empty string ('') পাঠাও
         },
       );
@@ -85,7 +87,7 @@ class ApiCaller {
           "Accept": "application/json",
           "Content-Type": "application/json",
           'token':
-              AuthController.accessToken ??
+          accessToken ?? // By provider  // AuthController.accessToken ??  // By ControllerAuthController.accessToken ??
               '', // যদি AuthController.accessToken null না হয়, তাহলে সেটার value নাও আর যদি null হয়, তাহলে empty string ('') পাঠাও
         },
         body: body != null

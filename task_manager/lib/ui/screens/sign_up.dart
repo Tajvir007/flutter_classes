@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/data/services/api_caller.dart';
 import 'package:task_manager/data/utils/urls.dart';
+import 'package:task_manager/providers/network_provider.dart';
 import 'package:task_manager/ui/screens/login_page.dart';
 
 import '../widgets/background_page_logo.dart';
@@ -27,8 +29,11 @@ class _SignUpState extends State<SignUp> {
 
   bool _signUpInProgress = false;
 
+  // By Controller
   // 4. Create a function to call api caller and sign up
+  /**
   Future<void> _signUp()async {
+
     setState(() {
       _signUpInProgress = true;
     });
@@ -74,7 +79,41 @@ class _SignUpState extends State<SignUp> {
       }
 
   }
+**/
 
+  Future<void> _signUp()async {
+
+    final networkProvider = Provider.of<NetworkProvider>(context, listen: false);
+    final result = networkProvider.register(
+        email: _emailController.text.trim(),
+        firstName: _firstNameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        phone: _phoneController.text.trim(),
+        password: _passwordController.text.trim()
+    );
+
+    if(result != null){
+      _clearTextFields();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Sign up successful..!"),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 5),
+          )
+      );
+
+      Navigator.pop(context);
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(networkProvider.errorMessage ?? 'Something wrong'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 5),
+          )
+      );
+    }
+
+  }
 
   // 6. Create a function to clear all text field
   _clearTextFields(){

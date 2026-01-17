@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/ui/widgets/task_manager_app_bar.dart';
 import 'package:task_manager/ui/widgets/task_card.dart';
 import '../../data/models/task_model.dart';
 import '../../data/services/api_caller.dart';
 import '../../data/utils/urls.dart';
+import '../../providers/task_provider.dart';
 import '../widgets/snack_bar.dart';
 import '../widgets/task_card.dart';
 
@@ -21,7 +23,8 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
 
   bool _getProgressTaskProgress = false;
 
-  // 2. Progress task:
+  // 2. Progress task: By Caller
+  /**
   Future<void> _getAllTask() async {
     _getProgressTaskProgress = true;
     setState(() {
@@ -49,40 +52,73 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
     _progressTaskList = taskList; // final list main state variable-এ assign, UI তে এই data show হবে
 
   }
+**/
+
+
+  // By Provider. 2. Task count
+  Future<void> loadData()async {
+    final taskProvider = Provider.of<TaskProvider>(context);
+    Future.wait(
+        [
+          taskProvider.fetchNewTaskByStatus('Progress'),
+        ]
+    );
+  }
+
+
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    loadData();
+
+    /** ************** Controller **************
     _getAllTask();
     setState(() {
 
     });
+        **/
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: TaskManagerAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: ListView.separated(
-            itemCount: _progressTaskList.length,
-            itemBuilder: (context, index){
+        body: Consumer<TaskProvider>(
+            builder: (context,taskProvider, child) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: ListView.separated(
+             //   itemCount: _progressTaskList.length, // By Controller
 
-              return  TaskCard(
-                // status: 'New',
-                taskModel: _progressTaskList[index],
-                refreshParent: (){
-                  _getAllTask();
+                itemCount: taskProvider.progressTask.length, // By Provider
+                itemBuilder: (context, index){
+
+                  return  TaskCard(
+                    // status: 'Progress',
+                 //   taskModel: _progressTaskList[index], // By Controller
+
+
+                    taskModel: taskProvider.progressTask[index], // By Provider
+                    refreshParent: (){
+                   //   _getAllTask(); // By Controller
+
+                      loadData();
+
+                    },
+                    cardColor: Colors.blue,); // It's a custom widget. It is used to show the task card in main body through list view
+
                 },
-                cardColor: Colors.blue,); // It's a custom widget. It is used to show the task card in main body through list view
-
-            },
-            separatorBuilder: (context, index){
-              return SizedBox(height: 4,);
-            },
-          ),
+                separatorBuilder: (context, index){
+                  return SizedBox(height: 4,);
+                },
+              ),
+            );
+          }
         )
     );
   }

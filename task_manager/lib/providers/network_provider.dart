@@ -94,13 +94,7 @@ class NetworkProvider extends ChangeNotifier{
     if(response.isSuccessful){
       _registrationState = ApiState.success;
       notifyListeners();
-      return {
-
-        // Save user data in shared preferences and navigate to main screen
-        'user' : UserModel.fromJson(response.responseData['data']),
-        'token' : response.responseData['token']
-
-      };
+      return response.responseData;
     }else{
       _logInState = ApiState.error;
       _errorMessage = response.errorMessage ?? 'Login failed';
