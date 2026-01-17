@@ -40,7 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // By Auth Provider
     final authProvider = Provider.of<AuthProvider>(context, listen: false); // এই লাইনে তুমি Widget tree থেকে AuthProvider-এর instance নিয়ে আসছো।
+<<<<<<< HEAD
     await authProvider.loadUserData();
+=======
+    authProvider.loadUserData();
+>>>>>>> 6eb5b03cc9387587a6b515eb2a0946ffb49c7373
 
     if(authProvider.isLoggedIn){
       Navigator.pushReplacementNamed(context, 'mainNavBarHolderScreen');
