@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskManager extends StatelessWidget {
    TaskManager({super.key});
@@ -8,6 +9,31 @@ class TaskManager extends StatelessWidget {
   TextEditingController descriptionController = TextEditingController();
 
   final CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+
+
+  Future<void> updateTask(String id, bool isCompleted)async {
+    await tasks.doc(id).update(
+      {
+        'title' : titleController.text,
+        'description' : descriptionController.text,
+        'isCompleted' : isCompleted,
+      }
+    );
+  }
+
+
+   Future<void> updateStatus(String id, bool isCompleted)async {
+     await tasks.doc(id).update(
+         {
+           'isCompleted' : isCompleted,
+         }
+     );
+   }
+
+
+Future<void> deleteTask(String id)async {
+  await tasks.doc(id).delete();
+}
 
   Future<void> addTask()async {
 
@@ -22,9 +48,20 @@ class TaskManager extends StatelessWidget {
   }
 
 
-  void ShowDialog(BuildContext context){
+  void ShowDialog(BuildContext context, [DocumentSnapshot ?doc]){
+
+    if(doc != null){
+      titleController.text = doc['title'];
+      descriptionController.text = doc['description'];
+    }else{
+      titleController.clear();
+      descriptionController.clear();
+    }
     
     showDialog(context: context, builder: (_)=>AlertDialog(
+      
+      title: Text(doc != null ? 'Update Task' : 'Add Task'),
+      
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -49,7 +86,9 @@ class TaskManager extends StatelessWidget {
           Navigator.pop(context);
         }, child: Text('Cancel')),
         TextButton(onPressed: (){
-          addTask();
+
+          doc != null ? updateTask(doc.id, doc['isCompleted']) : addTask();
+
           Navigator.pop(context);
         }, child: Text('Add')),
       ],
@@ -72,6 +111,10 @@ class TaskManager extends StatelessWidget {
         stream: tasks.snapshots(),
         builder: (context, snapshot) {
 
+          if(!snapshot.hasData){
+            return Center(child: CircularProgressIndicator(),);
+          }
+
           final docs = snapshot.data!.docs;
 
           return ListView.builder(
@@ -80,11 +123,39 @@ class TaskManager extends StatelessWidget {
 
                 final doc = docs[index];
 
-                return ListTile(
-                  title: Text(doc['title']),
-                  subtitle: Text(doc['description']),
-                  leading: Checkbox(value: false, onChanged: (value){}),
-                  trailing: Icon(Icons.edit),
+                return Slidable(
+
+                  key: ValueKey(doc.id),
+                  endActionPane: ActionPane(
+                      motion: DrawerMotion(),
+                      children: [
+                        SlidableAction(onPressed: (_){
+                          deleteTask(doc.id);
+                        },
+                        backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Delete',
+                        ),
+
+                      ]),
+
+                  child: Card(
+                    child: ListTile(
+                      title: Text(doc['title']),
+                      subtitle: Text(doc['description']),
+                      leading: Checkbox(value: doc['isCompleted'], onChanged: (value){
+
+                        updateStatus(doc.id, value!);
+
+                      }),
+                      trailing: IconButton(onPressed: (){
+
+                        ShowDialog(context, doc);
+
+                      }, icon: Icon(Icons.edit)),
+                    ),
+                  ),
                 );
               });
         }
