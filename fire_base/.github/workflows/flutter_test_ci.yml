@@ -1,0 +1,53 @@
+# Workflow নাম (GitHub UI তে দেখাবে)
+name: Flutter CI - Test Only
+
+# কখন এই pipeline run হবে
+on:
+  push:               # যখন push করা হবে
+    branches: [ "main", "master" ]
+  pull_request:       # যখন PR open হবে
+    branches: [ "main", "master" ]
+
+jobs:
+  flutter-test:
+    # কোন OS এ run হবে
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: GitHub repo code checkout করা
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        # 👉 repo থেকে code runner machine এ নিয়ে আসে
+
+      # Step 2: Flutter setup করা
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.19.0"   # 👉 তুমি যেই version use করো
+          channel: stable
+
+      # Step 3: Flutter version check (optional but useful)
+      - name: Flutter version check
+        run: flutter --version
+        # 👉 confirm করে Flutter ঠিকমতো install হয়েছে কিনা
+
+      # Step 4: Dependency install
+      - name: Install dependencies
+        run: flutter pub get
+        # 👉 pubspec.yaml থেকে সব package install করবে
+
+      # Step 5: Code analyze
+      - name: Analyze Flutter code
+        run: flutter analyze
+        # 👉 code quality check (warning / error ধরবে)
+
+      # Step 6: Run unit tests
+      - name: Run Flutter tests
+        run: flutter test
+        # 👉 test/ folder এর সব test run হবে
+        # 👉 test fail হলে pipeline FAIL ❌
+
+      # Step 7: Build check (APK only, deploy না)
+      - name: Build debug APK (test purpose)
+        run: flutter build apk --debug
+        # 👉 নিশ্চিত করে project buildable কিনা
