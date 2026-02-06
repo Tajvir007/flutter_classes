@@ -1,6 +1,8 @@
-import 'package:fire_base/task_manager.dart';
-import 'package:fire_base/voting_page.dart';
+// import 'package:fire_base/task_manager.dart';
+// import 'package:fire_base/voting_page.dart';
 import 'package:flutter/material.dart';
+
+import 'notification_demo.dart';
 
 class FirebaseFirestore extends StatelessWidget {
   const FirebaseFirestore({super.key});
@@ -11,7 +13,7 @@ class FirebaseFirestore extends StatelessWidget {
 
       title: 'Voting App',
 
-      home: TaskManager(),
+      home: NotificationDemo(),
 
     );
   }
