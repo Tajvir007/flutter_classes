@@ -2,6 +2,7 @@
 // import 'package:fire_base/voting_page.dart';
 import 'package:flutter/material.dart';
 
+import 'firebase_auth_login_page.dart';
 import 'notification_demo.dart';
 
 class FirebaseFirestore extends StatelessWidget {
@@ -13,7 +14,7 @@ class FirebaseFirestore extends StatelessWidget {
 
       title: 'Voting App',
 
-      home: NotificationDemo(),
+      home: FirebaseAuthLoginPage(),
 
     );
   }
