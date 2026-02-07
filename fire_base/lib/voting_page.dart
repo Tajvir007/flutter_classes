@@ -11,8 +11,6 @@ class VotingPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-
-
     voteParticipant(String id){
 
       FirebaseFirestore.instance.collection('participants').doc(id).update({
@@ -23,8 +21,6 @@ class VotingPage extends StatelessWidget {
       );
 
     }
-
-
 
 
     /**

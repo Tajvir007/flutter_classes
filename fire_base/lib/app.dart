@@ -1,3 +1,4 @@
+import 'package:fire_base/student_info.dart';
 import 'package:fire_base/voting_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class FirebaseFirestore extends StatelessWidget {
 
       title: 'Voting App',
 
-      home: VotingPage(),
+      home: StudentInfo(),
 
     );
   }
