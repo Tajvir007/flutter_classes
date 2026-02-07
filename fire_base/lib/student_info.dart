@@ -33,7 +33,7 @@ class _StudentInfoState extends State<StudentInfo> {
             }
 
             return ListView.builder(
-                itemCount: 3,
+                itemCount: students.length,
 
                 itemBuilder: (context, index){
 
